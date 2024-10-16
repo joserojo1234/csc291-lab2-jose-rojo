@@ -1,69 +1,65 @@
-/******************************************************************************
-
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
 // Coffee types and their ingredient requirements
-#define coffee1 = "Espresso";
-#define coffee2 = "Cappuccino";
-#define coffee3 = "Mocha";
+#define espresso = "Espresso";
+#define cappuccino = "Cappuccino";
+#define mocha = "Mocha";
 
 // Ingredients for each coffee type
-int coffee1Beans = 8, coffee1Water = 30, coffee1Milk = 0, coffee1Chocolate = 0;
-int coffee2Beans = 8, coffee2Water = 30, coffee2Milk = 70, coffee2Chocolate = 0;
-int coffee3Beans = 8, coffee3Water = 39, coffee3Milk = 160, coffee3Chocolate = 30;
+int espressoBeans = 8, espressoWater = 30, espressoMilk = 0, espressoChocolate = 0;
+int cappuccinoBeans = 8, cappuccinoWater = 30, cappuccinoMilk = 70, cappuccinoChocolate = 0;
+int mochaBeans = 8, mochaWater = 39, mochaMilk = 160, mochaChocolate = 30;
 
 // Prices for each coffee type
-double coffee1Price = 3.5;
-double coffee2Price = 4.5;
-double coffee3Price = 5.5;
+double espressoPrice = 3.5;
+double cappuccinoPrice = 4.5;
+double mochaPrice = 5.5;
 
 // Minimum levels for ingredients
-const int minCoffeeBeans = 10;
+const int minBeans = 10;
 const int minWater = 50;
 const int minMilk = 50;
-const int minChocolateSyrup = 10;
+const int minChocolate = 10;
 
 // Current levels for ingredients
-int coffeeBeans = 250;
-int water = 250;
-int milk = 250;
-int chocolateSyrup = 100;
+int totalBeans = 250;
+int totalWater = 250;
+int totalMilk = 250;
+int totalChocolate = 100;
 
-double totalSalesAmount = 0;
+double totalSales = 0;
 
 // Admin password
-const char *adminPass = "hello";
+const char *adminPassword = "hello";
 
 void orderCoffee() {
     while (1) {
         printf("Available Coffee Types:\n");
 
         // Check availability of each coffee type and print the menu
-        if (coffeeBeans >= coffee1Beans && water >= coffee1Water)
-            printf("1. %s - AED %.2f\n", coffee1, coffee1Price);
+        if (totalBeans >= espressoBeans && totalWater >= espressoWater)
+            printf("1. %s - AED %.2f\n", espresso, espressoPrice);
         else
-            printf("1. %s - not available\n", coffee1);
+            printf("1. %s - not available\n", espresso);
 
-        if (coffeeBeans >= coffee2Beans && water >= coffee2Water && milk >= coffee2Milk)
-            printf("2. %s - AED %.2f\n", coffee2, coffee2Price);
+        if (totalBeans >= cappuccinoBeans && totalWater >= cappuccinoWater && totalMilk >= cappuccinoMilk)
+            printf("2. %s - AED %.2f\n", cappuccino, cappuccinoPrice);
         else
-            printf("2. %s - not avaialable\n", coffee2);
+            printf("2. %s - not available\n", cappuccino);
 
-        if (coffeeBeans >= coffee3Beans && water >= coffee3Water && milk >= coffee3Milk && chocolateSyrup >= coffee3Chocolate)
-            printf("3. %s - AED %.2f\n", coffee3, coffee3Price);
+        if (totalBeans >= mochaBeans && totalWater >= mochaWater && totalMilk >= mochaMilk && totalChocolate >= mochaChocolate)
+            printf("3. %s - AED %.2f\n", mocha, mochaPrice);
         else
-            printf("3. %s - not available\n", coffee3);
-         // Check if any coffee is available
-        if (coffeeBeans < coffee1Beans && coffeeBeans < coffee2Beans && coffeeBeans < coffee3Beans) {
-            printf("out of coffee. Exiting...\n");
+            printf("3. %s - not available\n", mocha);
+        
+        // Check if any coffee is available
+        if (totalBeans < espressoBeans && totalBeans < cappuccinoBeans && totalBeans < mochaBeans) {
+            printf("Out of coffee. Exiting...\n");
             return;
+        }
+        
         int choice;
         do {
             printf("Enter your selection (1-3 or 0 to exit): ");
@@ -72,26 +68,39 @@ void orderCoffee() {
 
         if (choice == 0) {
             return;
-        }        // Serve the selected coffee type
-        int beans = 0, water = 0, milk = 0, chocolate = 0;
+        }
+
+        // Serve the selected coffee type
+        int beansUsed = 0, waterUsed = 0, milkUsed = 0, chocolateUsed = 0;
         double price = 0;
         const char *selectedCoffee = NULL;
 
         switch (choice) {
             case 1:
-                beans = coffee1Beans; water = coffee1Water; milk = coffee1Milk; chocolate = coffee1Chocolate;
-                price = coffee1Price; selectedCoffee = coffee1;
+                beansUsed = espressoBeans; waterUsed = espressoWater; milkUsed = espressoMilk; chocolateUsed = espressoChocolate;
+                price = espressoPrice; selectedCoffee = espresso;
                 break;
             case 2:
-                beans = coffee2Beans; water = coffee2Water; milk = coffee2Milk; chocolate = coffee2Chocolate;
-                price = coffee2Price; selectedCoffee = coffee2;
+                beansUsed = cappuccinoBeans; waterUsed = cappuccinoWater; milkUsed = cappuccinoMilk; chocolateUsed = cappuccinoChocolate;
+                price = cappuccinoPrice; selectedCoffee = cappuccino;
                 break;
-
-    
+            case 3:
+                beansUsed = mochaBeans; waterUsed = mochaWater; milkUsed = mochaMilk; chocolateUsed = mochaChocolate;
+                price = mochaPrice; selectedCoffee = mocha;
+                break;
+        }
+        
+        printf("Serving your %s. Enjoy!\n", selectedCoffee);
+        totalBeans -= beansUsed;
+        totalWater -= waterUsed;
+        totalMilk -= milkUsed;
+        totalChocolate -= chocolateUsed;
+        totalSales += price;
     }
 }
-void adminMode() {
 
+void adminMode() {
+    // Admin functionality can be implemented here
 }
 
 int main() {
@@ -107,7 +116,7 @@ int main() {
 
         switch (option) {
             case 1:
-                orderCof, fee();
+                orderCoffee();
                 break;
             case 2:
                 adminMode();
@@ -122,4 +131,3 @@ int main() {
 
     return 0;
 }
-
