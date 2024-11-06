@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+#define MAX_TRANSACTIONS 10
+
+int main() {
+    int balance = 1000; // initial balance
+    int transactions[MAX_TRANSACTIONS];
+    int numTransactions;
+
+    // Prompt the user for the number of transactions
+    printf("Enter the number of transactions (max %d): ", MAX_TRANSACTIONS);
+    scanf("%d", &numTransactions);
+
+    // Validate number of transactions
+    if (numTransactions > MAX_TRANSACTIONS) {
+        printf("Number of transactions exceeds the limit (%d).\n", MAX_TRANSACTIONS);
+        return 1; // Exit with error
+    }
+
+    // Input each transaction
+    for (int i = 0; i < numTransactions; i++) {
+        printf("Enter transaction %d: ", i + 1);
+        scanf("%d", &transactions[i]);
+    }
+
+    // Process each transaction
+    for (int i = 0; i < numTransactions; i++) {
+        int transaction = transactions[i];
+
+        // Check if the transaction exceeds the current balance for withdrawals
+        if (transaction < 0 && -transaction > balance) {
+            printf("Transaction of %d declined due to insufficient balance.\n", transaction);
+            continue; // Skip invalid transaction
+        }
+
+        // Update balance for valid transactions
+        balance += transaction;
+        printf("Transaction of %d has been completed. New balance is %d.\n", transaction, balance);
+    }
+
+    // Final balance
+    printf("\nFinal balance: %d\n", balance);
+
+    return 0;
+}
