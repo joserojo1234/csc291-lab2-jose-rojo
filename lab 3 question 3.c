@@ -145,8 +145,6 @@ void search_update() {
                     printf("Player details updated successfully.\n");
                     return;
                 }
-                else
-                printf("Player not found");
             }
         }
     } else if (option == 2) {
